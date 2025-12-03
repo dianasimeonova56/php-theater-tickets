@@ -36,24 +36,23 @@ if (!isset($_SESSION['username']) || $_SESSION['user_role'] != 'admin') {
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                   <?php
+                    <?php
                     if (isset($_SESSION['username'])) {
                         echo '
-                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/load_plays.php">Plays</a></li>';
+                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/load_plays.php">Plays</a></li>';
                         if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
-                            echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/add_play.php">Add a play</a></li>';
+                            echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/add_play.php">Add a play</a></li>';
                         } else {
-                            echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/book_play.php">Book a play</a></li>
+                            echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/book_play.php">Book a play</a></li>
                                 ';
                         }
-                        echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/my_profile.php">My Profile</a></li>';
+                        echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/my_profile.php">My Profile</a></li>';
                         echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" id="logout" href="#">Logout</a></li>';
                     } else {
                         echo '
-                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/register_page.php">Register</a></li>
-                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/login_page.php">Login</a></li>';
+                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/register_page.php">Register</a></li>
+                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/login_page.php">Login</a></li>';
                     };
-                    ?>
                     ?>
                 </ul>
             </div>

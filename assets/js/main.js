@@ -75,7 +75,7 @@ $(document).ready(function () {
     //USER: register
     $("#registerForm").on("submit", function (e) {
         e.preventDefault();
-        $.post("/api/register.php", {
+        $.post("../api/register.php", {
             username: $("#username").val(),
             first_name: $("#first_name").val(),
             last_name: $("#last_name").val(),
@@ -100,7 +100,7 @@ $(document).ready(function () {
     //USER: login
     $("#loginForm").on("submit", function (e) {
         e.preventDefault();
-        $.post("/api/login.php", {
+        $.post("../api/login.php", {
             usernameOrEmail: $("#usernameOrEmail").val(),
             password: $("#password").val(),
             recaptcha: grecaptcha.getResponse()
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
     //USER: logout
     $("#logout").on("click", function () {
-        $.post("/api/logout.php",
+        $.post("../api/logout.php",
             function (response) {
                 let data = JSON.parse(response);
                 if (data.status == "success") {
@@ -135,7 +135,7 @@ $(document).ready(function () {
         let formData = new FormData(this);
 
         $.ajax({
-            url: "/api/create_play.php",
+            url: "../api/create_play.php",
             type: "POST",
             data: formData,
             contentType: false,
@@ -155,7 +155,7 @@ $(document).ready(function () {
 
     //PLAYS: load individual play for PLAYS page
     function loadPlays() {
-        $.get("/api/load_plays.php", function (data) {
+        $.get("../api/load_plays.php", function (data) {
 
             let plays = JSON.parse(data);
             let grid = $("#playsGrid");
@@ -200,7 +200,7 @@ $(document).ready(function () {
 
     //PLAYS: load play names in select, if coming from PLAYS page (to book play) -> directly load the desired play
     function loadPlayNames() {
-        $.get("/api/load_plays.php", function (data) {
+        $.get("../api/load_plays.php", function (data) {
             let plays = JSON.parse(data);
             let select = $("#playName");
 
@@ -222,7 +222,7 @@ $(document).ready(function () {
 
     //PLAYS: load play for edit play 
     function loadPlay(urlID) {
-        $.get(`/api/get_play.php?id=${urlID}`, function (data) {
+        $.get(`../api/get_play.php?id=${urlID}`, function (data) {
             const play = JSON.parse(data);
 
             $('#name').val(play['data'].name);
@@ -244,7 +244,7 @@ $(document).ready(function () {
         let formData = new FormData(this);
 
         $.ajax({
-            url: "/api/edit_play.php",
+            url: "../api/edit_play.php",
             type: "POST",
             data: formData,
             contentType: false,
@@ -265,7 +265,7 @@ $(document).ready(function () {
     $(document).on("click", "#deletePlayBtn", function () {
         let playId = $(this).data("id");
 
-        $.post("/api/delete_play.php", {
+        $.post("../api/delete_play.php", {
             id: playId
         }, function (response) {
             let data = JSON.parse(response);
@@ -288,7 +288,7 @@ $(document).ready(function () {
         });
 
 
-        $.get(`/api/get_reserved_seats.php?playId=${playId}`, function (response) {
+        $.get(`../api/get_reserved_seats.php?playId=${playId}`, function (response) {
             let result = JSON.parse(response);
 
             if (result.status === "success") {
@@ -340,7 +340,7 @@ $(document).ready(function () {
         formData.append('selectedSeats', JSON.stringify(selectedSeats));
 
         $.ajax({
-            url: "/api/book_play.php",
+            url: "../api/book_play.php",
             type: "POST",
             data: formData,
             contentType: false,
@@ -359,7 +359,7 @@ $(document).ready(function () {
 
     //USER: load user's profile info and bookings
     function loadProfile() {
-        $.get("/api/load_profile.php", function (data) {
+        $.get("../api/load_profile.php", function (data) {
             const profile = JSON.parse(data);
 
             $('#first_name').val(profile['user'].first_name);
@@ -408,7 +408,7 @@ $(document).ready(function () {
         let formData = new FormData(this);
 
         $.ajax({
-            url: "/api/edit_profile.php",
+            url: "../api/edit_profile.php",
             type: "POST",
             data: formData,
             contentType: false,
@@ -430,7 +430,7 @@ $(document).ready(function () {
         let formData = new FormData(this);
 
         $.ajax({
-            url: "/api/change_password.php",
+            url: "../api/change_password.php",
             type: "POST",
             data: formData,
             contentType: false,
@@ -451,7 +451,7 @@ $(document).ready(function () {
     $(document).on("click", "#deleteBookingBtn", function () {
         let bookingId = $(this).data("id");
 
-        $.post("/api/delete_booking.php", {
+        $.post("../api/delete_booking.php", {
             id: bookingId
         }, function (response) {
             let data = JSON.parse(response);

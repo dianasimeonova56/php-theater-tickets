@@ -1,5 +1,5 @@
 <?php
-require_once "/db.php";
+require_once "../db.php";
 
 if (empty($_GET['playId']) || !is_numeric($_GET['playId'])) {
     echo json_encode(['status' => 'error', 'message' => 'No play id provided!']);

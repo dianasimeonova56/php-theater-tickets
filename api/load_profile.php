@@ -1,6 +1,11 @@
 <?php
-require_once "/db.php";
+require_once "../db.php";
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+    exit;
+}
 
 $stmt = $conn->prepare(
    "SELECT u.*, 

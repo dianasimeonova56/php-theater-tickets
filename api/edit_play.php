@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "/db.php";
+require_once "../db.php";
 
 if (empty($_POST['playId']) || empty($_POST['playName']) || empty($_POST['description']) || empty($_POST['playDate']) || empty($_POST['playDuration']) || empty($_FILES['playImg'])) {
     echo json_encode(['status' => 'error', 'message' => 'Provide info for all fields!']);
@@ -13,6 +13,16 @@ $description = $_POST['description'];
 $play_date = $_POST['playDate'];
 $play_duration = $_POST['playDuration'];
 $play_img = $_FILES['playImg']['name'] ?? "";
+
+if (!strtotime($play_date)) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid date format']);
+    exit;
+}
+
+if (!is_numeric($play_duration) || $play_duration <= 0) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid duration']);
+    exit;
+}
 
 if ($play_img != "") {
     $dir = "../assets/uploads/";
@@ -27,6 +37,7 @@ if ($play_img != "") {
     $fullPath = $dir . $filename;
 
     if (move_uploaded_file($_FILES['playImg']['tmp_name'], $fullPath)) {
+
         $stmt = $conn->prepare("UPDATE plays SET name = ?, description = ?, date = ?, duration = ?, image = ? WHERE id = ?");
         $stmt->bind_param("sssisi", $play_name, $description, $play_date, $play_duration, $play_img, $play_id);
         if ($stmt->execute()) {

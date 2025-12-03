@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once "/db.php";
+require_once "../db.php";
 
-$env = parse_ini_file(__DIR__ . '/.env');
+$env = parse_ini_file(__DIR__ . '/../.env');
 $secretKey = $env['RECAPTCHA_SECRET_KEY'];
 
 $usernameOrEmail = $_POST["usernameOrEmail"] ?? "";
@@ -19,6 +19,13 @@ $response = json_decode($verify);
 if (!$response->success) {
     echo json_encode(['status' => 'error', 'message' => "Confirm you're not a robot"]);
     exit;
+}
+
+if (strpos($usernameOrEmail, '@') !== false) { 
+    if (!filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['status' => 'error', 'message' => "Invalid email format!"]);
+        exit;
+    }
 }
 
 $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR username = ? LIMIT 1");

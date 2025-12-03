@@ -1,19 +1,39 @@
 <?php
 session_start();
-require_once "/db.php";
+require_once "../db.php";
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+    exit;
+}
+$id = $_SESSION['user_id'];
 
 if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['username']) || empty($_POST['email']) || empty($_POST['phone']) || empty($_POST['password'])) {
     echo json_encode(['status' => 'error', 'message' => 'Please fill all required fields!']);
     exit;
 }
 
-$id = $_SESSION['user_id'];
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 $username = $_POST['username'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
 $password = $_POST['password'];
+
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid email format']);
+    exit;
+}
+
+if (!preg_match('/^[a-zA-Z0-9_]{3,20}$/', $username)) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid username']);
+    exit;
+}
+
+if (!preg_match('/^[0-9]{10,15}$/', $phone)) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid phone number']);
+    exit;
+}
 
 $stmt = $conn->prepare("SELECT * FROM users WHERE id=?");
 $stmt->bind_param("i", $id);

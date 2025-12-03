@@ -38,8 +38,8 @@ if (isset($_SESSION['username'])) {
                 <ul class="navbar-nav ms-auto">
                     <?php
                     echo '
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/register_page.php">Register</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pages/login_page.php">Login</a></li>';
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/register_page.php">Register</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/kursowa/pages/login_page.php">Login</a></li>';
                     ?>
                 </ul>
             </div>
@@ -79,6 +79,7 @@ if (isset($_SESSION['username'])) {
                         <div class="form-floating mb-3">
                             <input class="form-control" id="password" type="password" name="password" required />
                             <label for="password">Password</label>
+                            <p class="text-muted">Password should be at least 8 characters long, contain 1 uppercase, 1 lowercase, 1 number!</p>
                         </div>
                         <div class="form-floating mb-3">
                             <input class="form-control" id="repeat_password" type="password" name="repeat_password" required />

@@ -1,12 +1,12 @@
 <?php
-require_once "/db.php";
+require_once "../db.php";
 
 if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo json_encode(['status' => 'error', 'message' => "No play id provided!"]);
     exit;
 }
 
-$id = $_GET['id'];
+$id = (int)$_GET['id'];
 
 $stmt = $conn->prepare("SELECT * FROM plays WHERE id = ?");
 $stmt->bind_param("i", $id);

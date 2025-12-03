@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "/db.php";
+require_once "../db.php";
 
 if (empty($_POST["playId"]) || empty($_POST["selectedSeats"])) {
     echo json_encode(['status' => 'error', 'message' => 'Please fill all fields!']);
@@ -10,6 +10,11 @@ if (empty($_POST["playId"]) || empty($_POST["selectedSeats"])) {
 $playId = filter_input(INPUT_POST, "playId", FILTER_VALIDATE_INT);
 $selectedSeats = json_decode($_POST['selectedSeats'], true);
 $userId = $_SESSION['user_id'];
+
+if (!is_array($selectedSeats) || count($selectedSeats) === 0) {
+    echo json_encode(['status'=>'error','message'=>'No seats selected!']);
+    exit;
+}
 
 $stmt = $conn->prepare("INSERT INTO bookings (play_id,user_id) VALUES (?, ?)");
 $stmt->bind_param("ii", $playId, $userId);

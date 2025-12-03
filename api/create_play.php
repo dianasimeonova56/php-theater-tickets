@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "/db.php";
+require_once "../db.php";
 
 if (empty($_POST['playName']) || empty($_POST['description']) || empty($_POST['playDate']) || empty($_POST['playDuration']) || empty($_FILES['playImg'])) {
     echo json_encode(['status' => 'error', 'message' => 'Provide info for all fields!']);
@@ -12,6 +12,11 @@ $description = trim($_POST['description']);
 $play_date = $_POST['playDate'];
 $play_duration = filter_var($_POST['playDuration'], FILTER_VALIDATE_INT);
 $play_img = $_FILES['playImg']['name'];
+
+if ($play_duration <= 0) {
+    echo json_encode(['status'=>'error','message'=>'Invalid play duration!']);
+    exit;
+}
 
 $play_timestamp = strtotime($play_date);
 

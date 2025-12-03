@@ -1,11 +1,17 @@
 <?php
-require_once "/db.php";
+require_once "../db.php";
 
-$sql = "SELECT * FROM plays";
-$result = $conn->query($sql);
+$stmt = $conn->prepare("SELECT * FROM plays");
+$stmt->execute();
+$result = $stmt->get_result();
 
 if (!$result) {
-    echo json_encode(['status' => 'error', 'message' => "No plays found"]);
+    echo json_encode(['status' => 'error', 'message' => $conn->error]);
+    exit;
+}
+
+if ($result->num_rows === 0) {
+    echo json_encode(['status' => 'success', 'data' => []]);
     exit;
 }
 

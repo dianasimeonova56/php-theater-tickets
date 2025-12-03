@@ -1,12 +1,12 @@
 <?php
-require_once "/db.php";
+require_once "../db.php";
 
-if (empty("id")) {
-    echo json_encode(["status" => "error", "message" => "No booking id provided!"]);
+if (empty($_POST['id']) || !is_numeric($_POST['id'])) {
+    echo json_encode(["status" => "error", "message" => "No play id provided!"]);
     exit;
 }
 
-$id = $_POST['id'];
+$id = (int)$_POST['id'];
 
 $stmt = $conn->prepare("DELETE FROM bookings WHERE id = ?");
 $stmt->bind_param("i", $id);
